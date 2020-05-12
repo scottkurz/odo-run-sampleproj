@@ -8,6 +8,6 @@ public class StarterResource {
 
     @GET
     public String getRequest() {
-        return "StarterResource response";
+        return "VKVK May 7  StarterResource response";
     }
 }

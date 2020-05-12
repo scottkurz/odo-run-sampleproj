@@ -37,14 +37,21 @@ commands:
     actions:
       - workdir: /projects/user-app
         type: exec
-        command: /project/run-stack.sh odobld
+        command:  if [ ! -e /projects/user-app/.sksk ]; then touch /projects/user-app/.sksk; mvn -B -Plocal-dev -DappsDirectory=apps -Ddebug=false -Dmaven.repo.local=/mvn/repository pre-integration-test liberty:dev & else echo "already started"; fi; echo "Done SKSK"
+        #command:  if [ ! -e /projects/user-app/.sksk ]; then touch /projects/user-app/.sksk; mvn liberty:dev &; else echo "sksk marker exists"; fi; echo "Done marker SKSK test"
+#mvn -Plocal-dev -DappsDirectory=apps -Dmaven.repo.local=/mvn/repository liberty:dev
         component: appsodyrun
   - name: devRun
     actions:
       - workdir: /projects/user-app
         type: exec
-        command: /project/run-stack.sh odorun
+        command: echo "SKSK - in run"
         component: appsodyrun
     attributes:
         restart: "false"
-
+  - name: devInit
+    actions:
+      - workdir: /projects/user-app
+        type: exec
+        command: mvn --help
+        component: appsodyrun
