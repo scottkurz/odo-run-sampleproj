@@ -33,19 +33,11 @@ components:
         name: myprop2
 apiVersion: 1.0.0
 commands:
-  - name: devBuild
-    actions:
-      - workdir: /projects/user-app
-        type: exec
-        command:  if [ ! -e /projects/user-app/.sksk ]; then touch /projects/user-app/.sksk; mvn -B -Plocal-dev -DappsDirectory=apps -Ddebug=false -Dmaven.repo.local=/mvn/repository pre-integration-test liberty:dev & else echo "already started"; fi; echo "Done SKSK"
-        #command:  if [ ! -e /projects/user-app/.sksk ]; then touch /projects/user-app/.sksk; mvn liberty:dev &; else echo "sksk marker exists"; fi; echo "Done marker SKSK test"
-#mvn -Plocal-dev -DappsDirectory=apps -Dmaven.repo.local=/mvn/repository liberty:dev
-        component: appsodyrun
   - name: devRun
     actions:
       - workdir: /projects/user-app
         type: exec
-        command: echo "SKSK - in run"
+        command: mvn -Plocal-dev -DappsDirectory=apps -Dmaven.repo.local=/mvn/repository -DhotTests=true liberty:dev
         component: appsodyrun
     attributes:
         restart: "false"
